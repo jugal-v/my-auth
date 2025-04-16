@@ -1,4 +1,5 @@
 import Floater from './components/Floater';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
     return (
@@ -6,6 +7,8 @@ function App() {
             <Floater color="bg-green-500" size="w-64 h-64" top="-5%" left="10%" delay={0} />
             <Floater color="bg-emerald-500" size="w-48 h-48" top="70%" left="80%" delay={5} />
             <Floater color="bg-lime-500" size="w-32 h-32" top="40%" left="-10%" delay={2} />
+
+            <AppRoutes />
         </div>
     );
 }
