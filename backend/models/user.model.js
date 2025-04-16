@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    isVarified: {
+    isVerified: {
         type: Boolean,
         default: false
     },
@@ -26,7 +26,6 @@ const userSchema = new mongoose.Schema({
     resetPasswordExpiresAt: Date,
     verificationToken: String,
     verificationTokenExpiresAt: Date,
-
 },{
     timestamps: true
 })
