@@ -3,34 +3,34 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { User, Mail, Lock } from 'lucide-react';
+import { User, Mail, Lock, Loader } from 'lucide-react';
 import PasswordStrengthMeter from '../../components/PasswordStrengthMeter';
 import { useAuthStore } from '../../store/useAuthStore';
 
 const Signup = () => {
-    const navigate = useNavigate()
-    const { signup } = useAuthStore();
+    const navigate = useNavigate();
+    const { signup, error, isLoading } = useAuthStore();
     const { register, handleSubmit, watch } = useForm({
         // resolver: yupResolver(schema),
     });
 
     const passValue = watch('password');
 
-    const onSubmit = async(e, formData) => {
-        e.preventDefault;
+    const onSubmit = async ( formData) => {
         const payload = {
             email: formData.email,
             name: formData.name,
-            password: formData.password
-        }
-        try{
+            password: formData.password,
+        };
+        console.log(payload)
+        try {
             await signup(payload);
-            navigate('/verify-email');
-        }
-        catch(error){
+            if(!error){
+                navigate('/verify-email');
+            }
+        } catch (error) {
             console.log(error);
         }
-
     };
 
     return (
@@ -79,6 +79,7 @@ const Signup = () => {
                             className="w-full pl-10 pr-3 py-2 bg-gray-800 bg-opacity-50 rounded-lg border border-gray-700 focus:border-green-500 focus:ring-2 focus:ring-green-500 text-white placeholder-gray-400 transition duration-200"
                         />
                     </div>
+                    {error && <p className="text-red-500 font-semibold mt-2">{error}</p>}
                     <PasswordStrengthMeter password={passValue} />
                     <motion.button
                         className="mt-5 w-full py-3 px-4 bg-gradient-to-r from-green-500 to-emerald-600 text-white 
@@ -88,8 +89,9 @@ const Signup = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         type="submit"
+                        disabled={isLoading}
                     >
-                        Sign Up
+                        {isLoading ? <Loader className="animate-spin mx-auto" size={24} /> : 'Sign Up'}
                     </motion.button>
                 </form>
             </div>

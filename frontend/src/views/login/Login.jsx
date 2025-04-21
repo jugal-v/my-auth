@@ -2,20 +2,33 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Loader } from 'lucide-react';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { useAuthStore } from '../../store/useAuthStore';
+
 
 const Login = () => {
+    const { isLoading, error, login } = useAuthStore()
+    const navigate = useNavigate()
 
-  const [isLoading, setIsLoading] = useState(false)
     const { register, handleSubmit, watch } = useForm({
         // resolver: yupResolver(schema),
     });
 
-    const onSubmit = (formData) => {
-        console.log('formData', formData);
+    const onSubmit = async (formData) => {
+        const payload = {
+            email: formData.email,
+            password: formData.password,
+        };
+        console.log(payload);
+        try {
+            await login(payload);
+            if (!error) {
+                navigate('/');
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

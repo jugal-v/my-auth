@@ -1,15 +1,17 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useAuthStore } from '../../store/useAuthStore';
 
 const EmailVerification = () => {
+
+    const { verifyEmail, error, isLoading } = useAuthStore();
+
     const [code, setCode] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef([]);
     const navigate = useNavigate();
-    const isLoading = false;
-    const error = false;
 
     const handleChange = (index, value) => {
         const newCode = [...code];
@@ -41,10 +43,17 @@ const EmailVerification = () => {
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const handleSubmit = async () => {
         const verificationCode = code.join("")
-        console.log(verificationCode)
+        try{
+            await verifyEmail(verificationCode);
+            if(!error){
+                navigate('/');
+            }
+        }
+        catch{
+            console.log('error in verifyEmail ', error);
+        }
     };
 
     useEffect(() => {
