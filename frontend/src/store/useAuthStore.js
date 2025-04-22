@@ -76,5 +76,32 @@ export const useAuthStore = create((set) => ({
             set({error: "Error Logging Out"})
             toast.error("Error Logging Out")
         }
+    },
+
+    forgotPassword: async (email) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            await axios.post(`${API_URL}/forgot-password`, { email });
+            set({ isLoading: false });
+            toast.success('Password reset email sent successfully');
+        } catch (error) {
+            set({ error: error.response.data.message || 'Error Sending Password Reset Email', isLoading: false });
+            toast.error(error.response.data.message || 'Error Sending Password Reset Email');
+        }
+    },
+
+    resetPassword: async (token , password) => {
+        set({ isLoading: true, error: null });
+
+        try {
+            await axios.post(`${API_URL}/reset-password/${token}`, { password });
+            set({ isLoading: false });
+            toast.success('Password reset successfully');
+        } catch (error) {
+            set({ error: error.response.data.message || 'Error Resetting Password', isLoading: false });
+            toast.error(error.response.data.message || 'Error Resetting Password');
+        }
     }
+
 }));

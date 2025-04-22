@@ -7,6 +7,7 @@ import EmailVerification from '../views/email-verification/EmailVerification';
 import { useAuthStore } from '../store/useAuthStore';
 import Dashboard from '../views/home/Dashboard';
 import ForgotPassword from '../views/forgot-password/ForgotPassword';
+import ResetPassword from '../views/reset-password/ResetPassword';
 
 const RedirectAuthenticatedUser = ({ children }) => {
     const { isAuthenticated, user } = useAuthStore();
@@ -69,7 +70,7 @@ const AppRoutes = () => {
                     </RedirectAuthenticatedUser>
                 }
             />
-            {/* <Route path='/reset-password/:resetToken' element={<ResetPassword />} /> */}
+            <Route path='/reset-password/:token' element={<ResetPassword />} />
         </Routes>
     );
 };
