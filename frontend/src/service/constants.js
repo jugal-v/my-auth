@@ -39,4 +39,4 @@ export const formatDate = (dateString) => {
     });
 };
 
-export const API_URL = 'http://localhost:4000/api/auth';
+export const API_URL = import.meta.env.MODE === 'development' ? 'http://localhost:4000/api/auth' : '/api/auth';
