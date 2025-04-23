@@ -21,7 +21,7 @@ app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.VITE_MODE === 'production') {
     app.use(express.static(path.join(__dirname, '/frontend/dist')));
 
     app.get('/', (req, res) => {
