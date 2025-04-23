@@ -1,8 +1,7 @@
 import {create} from "zustand"
 import axios from 'axios'
 import { toast } from 'react-toastify';
-
-const API_URL = "http://localhost:4000/api/auth"
+import { API_URL } from '../service/constants';
 
 axios.defaults.withCredentials = true
 
@@ -13,15 +12,19 @@ export const useAuthStore = create((set) => ({
     isChecking: true,
 
     signup: async (payload) => {
+        console.log("api url", API_URL)
+        console.log(import.meta.env);
         set({ isLoading: true, error: null });
 
         try {
             const signUpResponse = await axios.post(`${API_URL}/signup`, payload);
             set({ user: signUpResponse.data.user, isAuthenticated: true, isLoading: false });
             toast.success('Signup successful! 🎉 Welcome aboard!');
+            return true
         } catch (error) {
             set({ error: error.response.data.message || 'Error Signing up', isLoading: false });
             toast.error(error.response.data.message || 'Error Signing up');
+            return false
         }
     },
 
@@ -53,7 +56,7 @@ export const useAuthStore = create((set) => ({
         set({isLoading: true, error: null})
 
         try{
-            const loginResponse = await await axios.post(`${API_URL}/login`, payload);
+            const loginResponse = await axios.post(`${API_URL}/login`, payload);
             set({ user: loginResponse.data.user, isAuthenticated: true, isLoading: false });
             toast.success('Logged in successfully! 🎉 Welcome aboard!');
         }
@@ -105,3 +108,4 @@ export const useAuthStore = create((set) => ({
     }
 
 }));
+

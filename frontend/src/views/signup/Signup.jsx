@@ -24,8 +24,8 @@ const Signup = () => {
         };
         console.log(payload)
         try {
-            await signup(payload);
-            if(!error){
+            const response = await signup(payload);
+            if(response){
                 navigate('/verify-email');
             }
         } catch (error) {

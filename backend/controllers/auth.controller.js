@@ -3,7 +3,7 @@ import crypto from 'crypto';
 
 import { User } from '../models/user.model.js';
 import { generateVerificationCode, generateTokenAndSetCookie } from '../utils/utils.js';
-import { sendVerificationEmail, sendWelcomeEmail, sendResetPasswordEmail, sendResetSuccessEmail } from '../mailtrap/emails.js';
+import { sendVerificationEmail, sendWelcomeEmail, sendResetPasswordEmail, sendResetSuccessEmail } from '../email/emails.js';
 
 export const signup = async (req, res) => {
     const { email, password, name } = req.body;

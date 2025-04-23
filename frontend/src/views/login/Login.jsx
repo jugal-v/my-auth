@@ -1,11 +1,10 @@
 /* eslint-disable no-unused-vars */
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Loader } from 'lucide-react';
 import { useAuthStore } from '../../store/useAuthStore';
-
 
 const Login = () => {
     const { isLoading, error, login } = useAuthStore()

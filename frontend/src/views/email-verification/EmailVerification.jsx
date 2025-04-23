@@ -1,12 +1,11 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useRef, useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuthStore } from '../../store/useAuthStore';
 
 const EmailVerification = () => {
-
     const { verifyEmail, error, isLoading } = useAuthStore();
 
     const [code, setCode] = useState(['', '', '', '', '', '']);
@@ -16,14 +15,12 @@ const EmailVerification = () => {
     const handleChange = (index, value) => {
         const newCode = [...code];
 
-        //handle pasted content
         if (value.length > 1) {
             const pastedCode = value.slice(0, 6).split('');
             for (let i = 0; i < 6; i++) {
                 newCode[i] = pastedCode[i] || '';
             }
             setCode(newCode);
-            //focus on last non-empty input or first empty one
             const lastFilledIndex = newCode.findLastIndex((digit) => digit !== '');
             const focusIndex = lastFilledIndex < 5 ? lastFilledIndex + 1 : 5;
             inputRefs.current[focusIndex].focus();
@@ -44,14 +41,13 @@ const EmailVerification = () => {
     };
 
     const handleSubmit = async () => {
-        const verificationCode = code.join("")
-        try{
+        const verificationCode = code.join('');
+        try {
             await verifyEmail(verificationCode);
-            if(!error){
+            if (!error) {
                 navigate('/');
             }
-        }
-        catch{
+        } catch {
             console.log('error in verifyEmail ', error);
         }
     };

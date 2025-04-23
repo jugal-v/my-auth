@@ -12,7 +12,7 @@ import ResetPassword from '../views/reset-password/ResetPassword';
 const RedirectAuthenticatedUser = ({ children }) => {
     const { isAuthenticated, user } = useAuthStore();
 
-    if (isAuthenticated && user.isVerified) {
+    if (isAuthenticated && user?.isVerified) {
         return <Navigate to="/" replace />;
     }
 
@@ -26,7 +26,7 @@ const ProtectedRoute = ({ children }) => {
         return <Navigate to="/login" replace />;
     }
 
-    if (!user.isVerified) {
+    if (!user?.isVerified) {
         return <Navigate to="/verify-email" replace />;
     }
 
@@ -61,7 +61,6 @@ const AppRoutes = () => {
                 }
             />
             <Route path="/verify-email" element={<EmailVerification />} />
-            {/* <Route path='/dashboard' element={<Dashboard />} /> */}
             <Route
                 path="/forgot-password"
                 element={
@@ -70,7 +69,7 @@ const AppRoutes = () => {
                     </RedirectAuthenticatedUser>
                 }
             />
-            <Route path='/reset-password/:token' element={<ResetPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
         </Routes>
     );
 };

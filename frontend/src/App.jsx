@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import Floater from './components/Floater';
 import AppRoutes from './routes/AppRoutes';
 import { useAuthStore } from './store/useAuthStore';
-import { Navigate } from 'react-router-dom';
 import LoadingSpinner from './components/LoadingSpinner';
 
 function App() {

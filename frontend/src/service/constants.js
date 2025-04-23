@@ -1,4 +1,3 @@
-
 export const getStrength = (pass) => {
     let strength = 0;
     if (pass.length >= 6) strength++;
@@ -39,3 +38,5 @@ export const formatDate = (dateString) => {
         hour12: true,
     });
 };
+
+export const API_URL = 'http://localhost:4000/api/auth';
